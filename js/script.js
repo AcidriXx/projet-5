@@ -1,14 +1,18 @@
 //fonction pour ajouter les element article ; img; name et description au html// 
 
-function newProduct(imageUrl, altTxt, name, description) {
-    const newItems = document.createElement('article');
-    newItems.innerHTML = `<img src="${imageUrl}" alt="${altTxt}">
-                          <h3 class="productName">${name}</h3>
-                          <p class="productDescription">${description}</p>`;
-    document.querySelector('.items').appendChild(newItems);
-}
-//fonction pour ajouter les lien de chaques articles//
+function newProduct(imageUrl, altTxt, name, description, _id) {
+    const newItems = document.createElement('a');
+    newItems.setAttribute("href",`product.html?${_id}`)
+    newItems.innerHTML =    `<article>
+                             <img src="${imageUrl}" alt="${altTxt}">
+                              <h3 class="productName">${name}</h3>
+                              <p class="productDescription">${description}</p>
+                            </article>`;
+    
+   
+    document.querySelector('.items').appendChild(newItems);  
 
+}
 
 
 // fonction async pour recuperer les donnes de l'api//
@@ -21,8 +25,8 @@ async function getProducts() {
 
     if(productsArray){
         for(i = 0 ; i< productsArray.length; i++){
-            console.log(productsArray[i].imageUrl)
-            newProduct(productsArray[i].imageUrl, productsArray[i].altTxt, productsArray[i].name, productsArray[i].description)
+            console.log(productsArray[i]._id)
+            newProduct(productsArray[i].imageUrl, productsArray[i].altTxt, productsArray[i].name, productsArray[i].description, productsArray[i]._id)
         }
     }
 }
