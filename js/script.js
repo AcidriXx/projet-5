@@ -2,7 +2,7 @@
 
 function newProduct(imageUrl, altTxt, name, description, _id) {
     const newItems = document.createElement('a');
-    newItems.setAttribute("href",`product.html?${_id}`)
+    newItems.setAttribute("href",`product.html?name=${_id}`)
     newItems.innerHTML =    `<article>
                              <img src="${imageUrl}" alt="${altTxt}">
                               <h3 class="productName">${name}</h3>
