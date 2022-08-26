@@ -2,7 +2,7 @@
 
 function newProduct(imageUrl, altTxt, name, description, _id) {
     const newItems = document.createElement('a');
-    newItems.setAttribute("href",`product.html?name=${_id}`)
+    newItems.setAttribute("href",`product.html?id=${_id}`)
     newItems.innerHTML =    `<article>
                              <img src="${imageUrl}" alt="${altTxt}">
                               <h3 class="productName">${name}</h3>
@@ -25,7 +25,7 @@ async function getProducts() {
 
     if(productsArray){
         for(i = 0 ; i< productsArray.length; i++){
-            console.log(productsArray[i]._id)
+            console.log(productsArray[i].imageUrl)
             newProduct(productsArray[i].imageUrl, productsArray[i].altTxt, productsArray[i].name, productsArray[i].description, productsArray[i]._id)
         }
     }
