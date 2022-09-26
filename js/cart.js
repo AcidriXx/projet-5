@@ -1,5 +1,4 @@
 
-
 //recuperation des elemnt dans le localStorage
 let productLocalStorage = JSON.parse(localStorage.getItem("product"))
 
@@ -109,14 +108,22 @@ const reducer = (accumulator, currentValue) => accumulator + currentValue;
 const totalQuantityProduct = totalQuantityCalcul.reduce(reducer,0);
 console.log(totalQuantityProduct);
 
-//document.querySelector("#totalQuantity").HTML(totalQuantityProduct);
+const quantityResult = document.querySelector("#totalQuantity");
+quantityResult.innerHTML = totalQuantityProduct;
+
 
 //total Price
 
 function totalPriceCalcul(price, quantity) {
 
-const arrayPrice = new Array(price * quantity);
-console.log(arrayPrice.length);
+const allPrice = new Array(parseInt(price * quantity));
+
+
+for(let z = 0; z < allPrice.length; z++) {
+  const totalPrice = allPrice[z];
+  
+  
+}
 
 
 }
@@ -136,7 +143,6 @@ btnFormulaire.addEventListener("click", (e)=>{
     city : document.querySelector("#city").value,
     email : document.querySelector("#email").value
   }
-  console.log(contact);
 
   const regExControl = (value) => {
     return /^[A-Za-z]{3,20}$/.test(value);
@@ -188,9 +194,8 @@ btnFormulaire.addEventListener("click", (e)=>{
   };
 
   const produits = [];
-  console.log(produits);
 
-  for(p = 0; p< productLocalStorage.length; p++) {
+  for(p = 0; p < productLocalStorage.length; p++) {
 
     let idPanier = productLocalStorage[p].idProduct;
     produits.push(idPanier);
@@ -198,7 +203,6 @@ btnFormulaire.addEventListener("click", (e)=>{
   }
   
   const postJson = {contact : contact, products : produits}
-  console.log(postJson);
   //envoye des objet a l'api
 
   if (prenomControle() && nomControle() && addressControle() && cityControle() && emailControle()) {
@@ -207,15 +211,30 @@ btnFormulaire.addEventListener("click", (e)=>{
       body: JSON.stringify(postJson),
       headers: {
         "Content-Type" : "application/json",
-      },
-    });
+      },      
+    })
+      .then((response) => response.json())
+      .then((promise) => {
+        console.log('success:', promise.orderId);
+        document.location.href=`./confirmation.html?id=${promise.orderId}`
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      })
+      
+      
   } 
   else {
     console.log("ko");
   }
 
 
+
+  
+
+
 })
 
 
 
+ // document.location.href=`./confirmation.html?id=${orderId}`
