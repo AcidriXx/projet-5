@@ -216,6 +216,7 @@ btnFormulaire.addEventListener("click", (e)=>{
       .then((response) => response.json())
       .then((promise) => {
         console.log('success:', promise.orderId);
+        localStorage.clear();
         document.location.href=`./confirmation.html?id=${promise.orderId}`
       })
       .catch((error) => {
@@ -228,13 +229,4 @@ btnFormulaire.addEventListener("click", (e)=>{
     console.log("ko");
   }
 
-
-
-  
-
-
 })
-
-
-
- // document.location.href=`./confirmation.html?id=${orderId}`

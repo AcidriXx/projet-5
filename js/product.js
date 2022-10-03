@@ -78,29 +78,26 @@ console.log(btn_panier);
 btn_panier.addEventListener("click", (e)=>{
   e.preventDefault();
 
-//declaration des valeur color et nombre choisis pas l'utilisateur
   const choiceColor = colorPanier.value;
   const choiceNumber = numberPanier.value;
   console.log(choiceNumber);
 
-//declaration de l'object du local storage 
   let optionProduit = {
     idProduct: id,
     quantity: parseInt(choiceNumber),
     colorProduct: choiceColor, 
   } 
 
-//recuperation de la clef "product" du localstorage
   let productLocalStorage = JSON.parse(localStorage.getItem("product"))
   console.log(productLocalStorage);
 
-  if (productLocalStorage == null) {
+  if (productLocalStorage === null) {
     productLocalStorage = [];
     productLocalStorage.push(optionProduit);
     console.log(productLocalStorage);
     localStorage.setItem("product", JSON.stringify(productLocalStorage));
   } 
-   else if (productLocalStorage != null) {
+   else if (productLocalStorage !== null) {
         for (i = 0; i < productLocalStorage.length ; i++) {
        console.log("test");
           if (productLocalStorage[i].idProduct === optionProduit.idProduct && productLocalStorage[i].colorProduct === optionProduit.colorProduct) {
