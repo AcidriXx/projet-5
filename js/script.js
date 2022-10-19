@@ -21,11 +21,10 @@ async function getProducts() {
     
     .then(res => res.json());
 
-    console.log(productsArray)
-
-    if(productsArray){
-        for(i = 0 ; i< productsArray.length; i++){
-            console.log(productsArray[i].imageUrl)
+    if(productsArray)
+    {
+        for(i = 0 ; i< productsArray.length; i++)
+        {
             newProduct(productsArray[i].imageUrl, productsArray[i].altTxt, productsArray[i].name, productsArray[i].description, productsArray[i]._id)
         }
     }

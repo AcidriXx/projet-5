@@ -18,12 +18,12 @@ var str = window.location.href;
 var url = new URL(str);
 var search_params = new URLSearchParams(url.search); 
 
-if(search_params.has('id')) {
+if(search_params.has('id')) 
+{
   var name = search_params.get('id');
- 
 }
 let id = name
-console.log(id)
+
 
 
 //recuperation du produit avec fetch avec son id 
@@ -31,10 +31,9 @@ const getKanap = async function () {
     let response = await fetch(`http://localhost:3000/api/products/${id}`)
     if (response.ok) {
       let data = await response.json()
-      console.log(data)
       
-      for (let i = 0 ; i < data.colors.length; i++){
-        console.log(data.colors)   
+      
+      for (let i = 0 ; i < data.colors.length; i++){   
         optionColor(data.colors[i])
         
     }; 
@@ -70,17 +69,30 @@ const numberPanier = document.querySelector("#quantity");
 
 //boutton pour ajouter au panier
 const btn_panier = document.querySelector("#addToCart");
-console.log(btn_panier);
+
 
 
 
 //ajout événement au click 
 btn_panier.addEventListener("click", (e)=>{
-  e.preventDefault();
+  
 
   const choiceColor = colorPanier.value;
+
+  if(colorPanier.value == "")
+  {
+    alert("Mettez une couleur valide.")
+    return false;
+  }
+
   const choiceNumber = numberPanier.value;
-  console.log(choiceNumber);
+
+  if(numberPanier.value == "" || numberPanier.value <= 0)
+  {
+    alert("Mettez un nombre valide.")
+    return false;
+  }
+  
 
   let optionProduit = {
     idProduct: id,
@@ -91,32 +103,43 @@ btn_panier.addEventListener("click", (e)=>{
   let productLocalStorage = JSON.parse(localStorage.getItem("product"))
   console.log(productLocalStorage);
 
-  if (productLocalStorage === null) {
+  if (productLocalStorage === null) 
+  {
     productLocalStorage = [];
     productLocalStorage.push(optionProduit);
     console.log(productLocalStorage);
     localStorage.setItem("product", JSON.stringify(productLocalStorage));
   } 
-   else if (productLocalStorage !== null) {
-        for (i = 0; i < productLocalStorage.length ; i++) {
-       console.log("test");
-          if (productLocalStorage[i].idProduct === optionProduit.idProduct && productLocalStorage[i].colorProduct === optionProduit.colorProduct) {
+   else if (productLocalStorage !== null) 
+   {
+
+      for (i = 0; i < productLocalStorage.length ; i++) 
+      {
+        if (productLocalStorage[i].idProduct === optionProduit.idProduct && productLocalStorage[i].colorProduct === optionProduit.colorProduct) 
+        {
             productLocalStorage[i].quantity += optionProduit.quantity,
             localStorage.setItem("product", JSON.stringify(productLocalStorage)),
             (productLocalStorage = JSON.parse(localStorage.getItem("product")));
-          }
         }
+      }
 
-      for (i = 0; i < productLocalStorage.length; i++) {
-        if((productLocalStorage[i].idProduct === optionProduit.idProduct && productLocalStorage[i].colorProduct !== optionProduit.colorProduct) ||
-            productLocalStorage[i].idProduct !== optionProduit.idProduct) {
-         return (
-          console.log("new"),
-          productLocalStorage.push(optionProduit),
-          localStorage.setItem("product", JSON.stringify(productLocalStorage)),
-          (productLocalStorage = JSON.parse(localStorage.getItem("product")))
+      for (i = 0; i < productLocalStorage.length; i++) 
+      {
+        if((productLocalStorage[i].idProduct === optionProduit.idProduct && productLocalStorage[i].colorProduct !== optionProduit.colorProduct) || productLocalStorage[i].idProduct !== optionProduit.idProduct) 
+        {
+          return (
+              console.log("new"),
+              productLocalStorage.push(optionProduit),
+              localStorage.setItem("product", JSON.stringify(productLocalStorage)),
+              (productLocalStorage = JSON.parse(localStorage.getItem("product")))
           )
         }
+      }
+    
+      if(productLocalStorage.length == [])
+      {
+          productLocalStorage.push(optionProduit);
+          localStorage.setItem("product", JSON.stringify(productLocalStorage));
       }
     } 
 });
